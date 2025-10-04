@@ -23,7 +23,7 @@
   footer: true,
   header-content: none,
   footer-content: none,
-  bibfile: none,
+  bib: none,
   doc,
 ) = {
   // Full width or with right margin
@@ -176,7 +176,7 @@
 
   doc
 
-  if bibfile != none { wideblock(bibliography(bibfile)) }
+  if bib != none { wideblock(bib) }
 }
 
 #let notecounter = counter("notecounter")

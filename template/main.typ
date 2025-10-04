@@ -11,7 +11,7 @@
     By keeping the large right margin for sidenotes, but changing the design language, this template aims to maintain the practicality of a sidenote-centric document, while having a more familiar look for scientific and engineering fields.
     This document covers the usage guide of this template.
   ],
-  bibfile: "main.bib",
+  bib: bibliography("main.bib"),
 )
 
 #sidenote(dy: 1.5em, numbered: false)[#outline(depth: 2)]
@@ -50,7 +50,7 @@ These are the 11 options#sidenote[All of which are optional.] and their default 
 + `footer: bool | true`,
 + `header-content: none = none`,
 + `footer-content: none = none`,
-+ `bibfile: [bib] | array | none = none`,
++ `bib: [bib content] | none = none`,
 
 === Title block
 
@@ -85,9 +85,9 @@ By default, as shown in this document, the page header contains the title, autho
 These can be turned off with `header: false` and `footer: false`.
 Custom header and footer contents can also be provided with `header-content` and `footer-content`.
 
-=== Bibliography --- `bibfile`
+=== Bibliography --- `bib`
 
-The `bibfile` option takes a `.bib` file for citations and is simply for convenience.
+The `bib` option takes a `bibliography("file.bib")` function for citations and is simply for convenience.
 It creates a "Bibliography" section at the end of the document in full width.
 
 == Functions
