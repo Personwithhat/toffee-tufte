@@ -1,4 +1,4 @@
-#import "../lib.typ": *
+#import "@preview/toffee-tufte:0.1.0": *
 
 #show: template.with(
   title: [`toffee-tufte 0.1.0`: An opinionated Tufte-inspired template for scientific reports],
