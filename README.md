@@ -5,6 +5,8 @@ By keeping the large right margin for sidenotes, but changing the design languag
 
 # Usage
 
+Refer to the [usage guide](https://codeberg.org/jianweicheong/toffee-tufte/src/branch/main/template/main.pdf) for more information.
+
 ```typst
 #import "@preview/toffee-tufte:0.1.0": *
 
