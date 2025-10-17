@@ -1,13 +1,17 @@
 #import "@preview/drafting:0.2.2": *
 
 #let sans-fonts = (
+  "fbb",
+  "ETBembo",
+  "TeX Gyre Pagella",
   "IBM Plex Sans",
+  "TeX Gyre Heros",
+  "Gillius ADF",
   "Atkinson Hyperlegible",
   "Noto Sans",
   "Helvetica",
   "Verdana",
-  "Geneva",
-  "sans-serif",
+  "Geneva"
 )
 
 #let fullwidth = state("fullwidth", false)
