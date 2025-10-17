@@ -1,4 +1,7 @@
+// Requirement to set up sidenotes
 #import "@preview/drafting:0.2.2": *
+// For header numbering. Can also be used for list/page numbers.
+#import "@preview/numbly:0.1.0": numbly
 
 #let sans-fonts = (
   "Gillius ADF",
@@ -34,6 +37,7 @@
   footer: true,
   header-content: none,
   footer-content: none,
+  draft: false,
   bib: none,
   doc,
 ) = {
@@ -82,22 +86,18 @@
   show list: set par(spacing: 1.25em)
 
   // Section headings
-  set heading(numbering: "1.1.1.", supplement: none)
-  show heading.where(level: 1): it => {
-    v(1.2em, weak: true)
-    text(size: 13pt, weight: "bold", it)
-    v(1em, weak: true)
-  }
-  show heading.where(level: 2): it => {
-    v(1.2em, weak: true)
-    text(size: 12pt, weight: "regular",style: "italic", it)
-    v(1em, weak: true)
-  }
-  show heading.where(level: 3): it => {
-    v(1.2em, weak: true)
-    text(size: 11pt, weight: "regular", style: "italic",it)
-    v(1em, weak: true)
-  }
+  // Using a trick from: https://github.com/flaribbit/numbly/issues/5
+  set heading(numbering: numbly(
+  (..)=>h(-0.3em),  // use {level:format} to specify the format
+  "{1}.{2}",        // if format is not specified, arabic numbers will be used
+  "{1}.{2}.{3}",    // here, we only want the 3rd level
+  ))
+
+  show heading.where(level: 1): set text(size: 13pt, weight: "bold")
+  show heading.where(level: 2): set text(size: 12pt, weight: "regular",style: "italic")
+  show heading.where(level: 3): set text(size: 10pt, weight: "regular",style: "italic")
+
+  show heading: set block(above: 1.2em, below: 1em)
 
 // **
 // ** Specialty
@@ -129,6 +129,9 @@
       it
     }
   }
+
+  show figure.caption: set text(font: sans-fonts)
+
   
 // **
 // ** Page, header, footer
@@ -168,6 +171,7 @@
         })
       } else { none } 
     },
+    background: if draft {rotate(45deg,text(font:sans-fonts,size:200pt, fill: rgb("#fff4f4"))[DRAFT])},
     footer-descent: 55%,
   )
 
@@ -198,9 +202,11 @@
   v(1.5em)
 
   // Set up SideNotes using the drafting package
+  // The *1.2 is to add some clearance between text body and notes
+  // Use #place-margin-rects[] to verify, or #margin-lines(stroke: rgb("#d42424"))
   set-page-properties(
-    margin-right: right-margin - left-margin,
-    margin-left: left-margin * 1.2,
+    margin-right: right-margin - left-margin*1.2,
+    margin-left: left-margin*1.2,
   )
   set-margin-note-defaults(
     stroke: none,
@@ -232,13 +238,15 @@
     footnote(body)
   } else {
     if numbered {
-      notecounter.step()
+      h(0.1em)
+      notecounter.step()  
       context super(notecounter.display())
     }
-    text(size: 8pt, margin-note(
+    text(size: 8pt, font: sans-fonts, margin-note(
       if numbered {
         text(size: 11pt, {
           context super(notecounter.display())
+          h(0.15em)
         })
         body
       } else {
