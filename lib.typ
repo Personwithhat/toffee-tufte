@@ -2,6 +2,9 @@
 #import "@preview/drafting:0.2.2": *
 // For header numbering. Can also be used for list/page numbers.
 #import "@preview/numbly:0.1.0": numbly
+// Code block formatting
+#import "@preview/codly:1.3.0": *
+#import "@preview/codly-languages:0.1.8": *
 
 #let sans-fonts = (
   "Gillius ADF",
@@ -24,10 +27,17 @@
   "Lucida Bright",
 )
 
+#let code-font = (
+  "Luxi Mono",
+  "Lilex"
+)
+
 /*
   Fonts, TBD:
     Digit/incrementing font for Notes
     Code/Raw inline and block font(s)
+    Math font of choice
+    Blocky numericals for 'large' numbers and some such?
 */
 
 #let fullwidth = state("fullwidth", false)
@@ -175,7 +185,7 @@
   set heading(numbering: numbly(
   (..)=>h(-0.3em),  // use {level:format} to specify the format
   "{1}.{2}",        // if format is not specified, arabic numbers will be used
-  "{1}.{2}.{3}",    // here, we only want the 3rd level
+  "{3:I -}",    // here, we only want the 3rd level
   ))
 
   show heading.where(level: 1): set text(size: 13pt, weight: "bold")
@@ -189,20 +199,61 @@
 // **
 // ** Specialty
 // **
-  // Inline ` sss `
+  let z-bg            = rgb("#dadada9d")
+  let code-bg         = rgb("#f5f5f5d0")
+  let code-border     = rgb("#F5F5F5").darken(10%)
+  show raw: set text(font: code-font)
+  // Raw: Odd inline size to minimize disruptions.
+  show raw.where(block: false): set text(size: 8.7pt)
   show raw.where(block: false): box.with(
-    fill: luma(95%),
+    fill: luma(96%),
     inset: (x: 3pt, y: 0pt),
     outset: (y: 3pt),
     radius: 2pt,
   )
-
-  // Block code ``` sss ``` 
-  show raw.where(block: true): block.with(
-    fill: luma(95%),
-    inset: 5pt,
+  show raw.where(block: true): set text(size: 7.6pt)
+  /*show raw.where(block: false): it => {
+    highlight(
+      fill:code-bg,
+      top-edge: "ascender",
+      bottom-edge: "bounds",
+      extent:1pt, it)
+  }*/
+  /*show raw.where(block: true): it => {
+    block(
+      fill: code-bg,
+      width:100%,
+      inset: 10pt,
+      radius: 4pt,
+      stroke: 0.1pt + code-border,
+      it,
+    )
+  }*/ 
+  // Codly
+  show: codly-init.with()
+  codly(
+    languages: codly-languages,
+    stroke: 0.1pt + code-border,
     radius: 4pt,
-    width: 100%,
+    number-format: (number) => {
+      text(luma(65%), size:7pt, [#h(0.7em)#number])
+    },
+    inset: (left:0em, rest:0.32em),
+    zebra-fill: z-bg,
+    fill: code-bg,
+    lang-format: none, // Don't need language atm.
+    header-transform: (x)=>{
+      set text(font: sans-fonts, size: 9.7pt, weight: "bold")
+      h(0.5em)
+      x
+    },
+    //header-cell-args: (align: center, ),
+    footer-transform: (x)=>{
+      set text(font: sans-fonts, size: 8.7pt, style:"italic")
+      v(0.5em)
+      x
+    },
+    footer-cell-args: (align: center, )
   )
 
   // Equation and figure references

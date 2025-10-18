@@ -17,7 +17,7 @@
 = Usage Guide <sec:usage-guide>
 == Motivation
 
-Famous for his works on information design and data visualization, #link("https://en.wikipedia.org/wiki/Edward_Tufte")[Edward Tufte]'s handout design is lauded for having well-set typography with a clean and elegant look.
+Famous for his works on information design and data visualization, #link("https://en.wikipedia.org/wiki/Edward_Tufte")[Edward Tufte's] handout design is lauded for having well-set typography with a clean and elegant look.
 Its design and style is a favorite of many, and has been replicated in various typesetting programs#note[See #link("https://www.overleaf.com/latex/templates/example-of-the-tufte-handout-style/ysjghcrgdrnz")[LaTeX], #link("https://bookdown.org/yihui/rmarkdown/tufte-handouts.html")[R Markdown], #link("https://github.com/fredguth/tufte-inspired")[Quarto], and Typst itself #link("https://typst.app/universe/package/tufte-memo")[one] - #link("https://typst.app/universe/package/toffee-tufte")[two]]
 
 This template aims to provide the practical advantages of the Tufte-inspired layout, while keeping the more familiar design language for scientific documents with a focus on information clarity and density.
@@ -59,16 +59,21 @@ If this formatting is not desired, one can combine the names in a single string 
 
 Note that any missing options#note[Or `date: none` for `date`.] will not create a blank line in the title block, but setting them as an empty string `""` would.
 
-=== Table of contents --- `toc`
+=== Table of contents
 // TODO: Not sure how to mesh this together with Bookstack TOC setup.....
 Table of contents is enabled by default, but can be deactivated with `toc: false`.
 It will be placed in the side-margin with as a normal Note, with `depth: 2`.
+// TODO - Annotations/higlights/references might be useful for someone.
+#codly(
+    header: [testing/header.cpp ], 
+    footer: [This is a footer #lorem(5)],
+)
 ```typst
 #note(numbered: false)[#outline(depth: 2)]
 ```
 TOC is disabled when `full` is used
 
-=== Full width --- `full`
+=== Full width
 
 In addition to the default Tufte-style format as shown in this document, this template also provides the option to become a full width document by setting `full: true`.
 Doing so will turn all contents placed in the right margin to footnotes automatically.
@@ -83,7 +88,7 @@ Custom header and footer contents can also be provided with `header-content` and
 
 Setting `draft: true` will introduce a soft watermark to make it clear the page is under ongoing revision.
 
-=== Bibliography --- `bib`
+=== Bibliography
 
 The `bib` option takes a `bibliography("file.bib")` function for citations and is simply for convenience.
 It creates a "Bibliography" section at the end of the document in full width.
@@ -166,7 +171,7 @@ For figures in the main text, it is also possible to position their caption as a
 )
 #set figure.caption(position: bottom)
 
-=== note citation --- `#sidecite()` <sec:sidecite>
+=== note citation --- `#sidecite()`
 
 #block(fill: luma(95%), radius: 4pt, inset: 5pt, [
   A note citation.
@@ -228,3 +233,16 @@ The usual `form`, `style`, and `supplement` for citations can be fed to the func
     caption: [This is a full width figure.],
   )
 ]
+
+= Code Tests
+
+#lorem(40)
+
+#lorem(40)
+
+#lorem(15) Behold:
+```
+Test Code block
+```
+
+#lorem(15) `Behold` or `this thing here` all right? `ok` #lorem(15)
