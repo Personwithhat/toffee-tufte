@@ -185,16 +185,21 @@
   set heading(numbering: numbly(
   (..)=>h(-0.3em),  // use {level:format} to specify the format
   "{1}.{2}",        // if format is not specified, arabic numbers will be used
-  "{3:I -}",    // here, we only want the 3rd level
+  (..)=>h(-0.3em),    // here, we only want the 3rd level
   ))
 
-  show heading.where(level: 1): set text(size: 13pt, weight: "bold")
-  show heading.where(level: 2): set text(size: 12pt, weight: "regular",style: "italic")
-  show heading.where(level: 3): set text(size: 10pt, weight: "regular",style: "italic")
+  show heading.where(level: 1): set text(size: 15pt, weight: "bold")
+  show heading.where(level: 2): set text(size: 14pt, weight: "regular",style: "italic")
+    show heading.where(level: 3): it => {
+        set text(size: 10pt, weight: "bold", style:"italic")
+        block(above: 1.9em, below: 0.8em)[
+          #underline(h(0.3em)+it.body, offset: 0.16em, extent: 0.3em)
+        ]
+    }
 
-  show heading.where(level: 1): set block(above: 1.2em, below: 1em)
-  show heading.where(level: 2): set block(above: 1.5em, below: 0.8em)
-  show heading.where(level: 3): set block(above: 1.8em, below: 0.7em)
+  show heading.where(level: 1): set block(above: 1.2em, below: 0.85em)
+  show heading.where(level: 2): set block(above: 1.4em, below: 0.7em)
+  //show heading.where(level: 3): set block(above: 1.8em, below: 0.7em)
 
 // **
 // ** Specialty

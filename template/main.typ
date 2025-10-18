@@ -125,7 +125,7 @@ For example, this note#note(dy: -2em)[This is an example note.] was placed as fo
 ```
 
 Different types of content can also be placed in with the `#note()` function, e.g., figures, tables, or code blocks.
-#note(dy: -6em, numbered: false)[
+#note(dy: -7em, numbered: false)[
   Likewise, this note without numbering can be placed by:
 
   ```typst
@@ -144,7 +144,7 @@ For example, this is a note figure:
 ]
 ```
 
-#note(dy: -10em, numbered: false)[
+#note(dy: -13.5em, numbered: false)[
   #figure(
     rect(width: 100%, height: 10em, fill: aqua, [
       #align(horizon, "This is a note figure.")
