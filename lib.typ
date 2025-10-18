@@ -199,14 +199,18 @@
 // **
 // ** Specialty
 // **
-  let z-bg            = rgb("#dadada9d")
-  let code-bg         = rgb("#f5f5f5d0")
-  let code-border     = rgb("#F5F5F5").darken(10%)
+  //let z-bg            = rgb("#dadadace")
+  //let code-bg         = rgb("#f5f5f596")
+  let z-bg            = rgb("#dadadace")
+  let code-bg         = rgb("#f5f5f5").darken(1%)
+  let code-border     = rgb("#F5F5F5").darken(16%)
   show raw: set text(font: code-font)
+  show raw: set block(above: 0.85em, below: 1.35em)
+
   // Raw: Odd inline size to minimize disruptions.
   show raw.where(block: false): set text(size: 8.7pt)
   show raw.where(block: false): box.with(
-    fill: luma(96%),
+    fill: code-bg,
     inset: (x: 3pt, y: 0pt),
     outset: (y: 3pt),
     radius: 2pt,
@@ -233,7 +237,7 @@
   show: codly-init.with()
   codly(
     languages: codly-languages,
-    stroke: 0.1pt + code-border,
+    stroke: 0.2pt + code-border,
     radius: 4pt,
     number-format: (number) => {
       text(luma(65%), size:7pt, [#h(0.7em)#number])
@@ -360,6 +364,7 @@
 
   doc
 
+  // TODO: Improve bibliography layout and font choice for it.
   set cite(style: "american-physics-society")
   show bibliography: set par(spacing: 1em)
   if bib != none { wideblock(bib) }

@@ -65,7 +65,7 @@ Table of contents is enabled by default, but can be deactivated with `toc: false
 It will be placed in the side-margin with as a normal Note, with `depth: 2`.
 // TODO - Annotations/higlights/references might be useful for someone.
 #codly(
-    header: [testing/header.cpp ], 
+    header: [sample/header.cpp ], 
     footer: [This is a footer #lorem(5)],
 )
 ```typst
@@ -96,7 +96,7 @@ It creates a "Bibliography" section at the end of the document in full width.
 == Functions
 // TODO: No way of making citations/notes not collide with bottom page numbers/footers.
 
-This template provides three functions: `#note()`, `#sidecite()`, and `#wideblock()`, which are modifications of functions made by #link("https://noahgula.com/")[Noah Gula] for his `tufte-memo` template #sidecite(<tufte-memo2024>, dy: -6em).
+This template provides three functions: `#note()`, `#sidecite()`, and `#wideblock()`, which are modifications of functions made by #link("https://noahgula.com/")[Noah Gula] for his `tufte-memo` template #sidecite(<tufte-memo2024>, dy: -7em).
 These functions rely on the `drafting` package by Nathan Jessurun and #link("https://t1ng.dk/")[Jens Tinggaard] #sidecite(<drafting2025>, dy: -2em).
 
 === note --- `#note()` <sec:note>
@@ -125,7 +125,7 @@ For example, this note#note(dy: -2em)[This is an example note.] was placed as fo
 ```
 
 Different types of content can also be placed in with the `#note()` function, e.g., figures, tables, or code blocks.
-#note(dy: -10em, numbered: false)[
+#note(dy: -6em, numbered: false)[
   Likewise, this note without numbering can be placed by:
 
   ```typst
@@ -144,16 +144,14 @@ For example, this is a note figure:
 ]
 ```
 
-#note(dy: -12.5em, numbered: false)[
+#note(dy: -10em, numbered: false)[
   #figure(
     rect(width: 100%, height: 10em, fill: aqua, [
       #align(horizon, "This is a note figure.")
     ]),
     caption: [This is an example note figure.],
   )
-]
-
-For figures in the main text, it is also possible to position their caption as a note with:
+]For figures in the main text, it is also possible to position their caption as a note with:
 
 ```typst
 #set figure.caption(position: top)
