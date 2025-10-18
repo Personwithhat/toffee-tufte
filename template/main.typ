@@ -1,10 +1,9 @@
 #import "../lib.typ": *
 
 #show: template.with(
-  title: [`toffee-tufte 0.1.0`: An opinionated Tufte-inspired template for scientific reports],
-  authors: "Jian Wei Cheong",
+  title: [TITLE TBD - something somethng wiki],
+  authors: "Nowhere Maam",
   // date: none,
-  // toc: true,
   // full: true,
   // draft: true,
   abstract: [
@@ -15,23 +14,18 @@
   bib: bibliography("main.bib"),
 )
 
-#note(dy: 1.5em, numbered: false)[#outline(depth: 2)]
-
 = Usage Guide <sec:usage-guide>
 == Motivation
 
 Famous for his works on information design and data visualization, #link("https://en.wikipedia.org/wiki/Edward_Tufte")[Edward Tufte]'s handout design is lauded for having well-set typography with a clean and elegant look.
-Its design and style is a favorite of many, and has been replicated in various typesetting programs#note[See #link("https://www.overleaf.com/latex/templates/example-of-the-tufte-handout-style/ysjghcrgdrnz")[LaTeX], #link("https://bookdown.org/yihui/rmarkdown/tufte-handouts.html")[R Markdown], #link("https://github.com/fredguth/tufte-inspired")[Quarto], and #link("https://typst.app/universe/package/tufte-memo")[Typst itself].].
-
-However, some design choices, _in my opinion_, lead to less information clarity#note[E.g., the use of _italics_ instead of *bold* for section headings.] and density.
-Furthermore, its design language might be atypical and unfamiliar to scientists and engineers, different from those in published literature, or those in common LaTeX or Typst templates.
+Its design and style is a favorite of many, and has been replicated in various typesetting programs#note[See #link("https://www.overleaf.com/latex/templates/example-of-the-tufte-handout-style/ysjghcrgdrnz")[LaTeX], #link("https://bookdown.org/yihui/rmarkdown/tufte-handouts.html")[R Markdown], #link("https://github.com/fredguth/tufte-inspired")[Quarto], and Typst itself #link("https://typst.app/universe/package/tufte-memo")[one] - #link("https://typst.app/universe/package/toffee-tufte")[two]]
 
 This template aims to provide the practical advantages of the Tufte-inspired layout, while keeping the more familiar design language for scientific documents with a focus on information clarity and density.
 
 == Options
 
 To use this template, simply import it and set the options with a `show` rule:
-
+// TODO - How to import locally
 ```typst
 #import "@preview/toffee-tufte:0.1.0": *
 #show: template.with(
@@ -39,13 +33,14 @@ To use this template, simply import it and set the options with a `show` rule:
   authors: "John Doe",
 )
 ```
+//TODO - Passing Bootstack Wiki settings as variables to template, e.g. Title
 
 These are the 11 options#note[All of which are optional.] and their default values:
 + `title: content | none = none`,
 + `authors: array | none | str = none`,
-+ `date: str =` \<todays date\>#note[The date is automatically set to be the current date in "21 September 2025" format.],
++ `date: str =` \<todays date\>#note[By default this date is set to be the current date in "21 September 2025" format.],
 + `abstract: none = none`,
-+ `toc: bool = false`,
++ `toc: bool = true`,
 + `full: bool | state = false`,
 + `header: bool | true`,
 + `footer: bool | true`,
@@ -65,15 +60,13 @@ If this formatting is not desired, one can combine the names in a single string 
 Note that any missing options#note[Or `date: none` for `date`.] will not create a blank line in the title block, but setting them as an empty string `""` would.
 
 === Table of contents --- `toc`
-
-Table of contents is disabled by default, but can be activated with `toc: true`.
-It will be placed right after the abstract in the title block, with up till `depth: 2`.
-
-One can also place the table of contents at the side margin as shown at the first page with#note[Here, we used the function `note` that comes with this template. Refer to Sec.~@sec:note for details on this function.]:
-
+// TODO: Not sure how to mesh this together with Bookstack TOC setup.....
+Table of contents is enabled by default, but can be deactivated with `toc: false`.
+It will be placed in the side-margin with as a normal Note, with `depth: 2`.
 ```typst
-#note(numbered: false)[#outline(depth: 3)]
+#note(numbered: false)[#outline(depth: 2)]
 ```
+TOC is disabled when `full` is used
 
 === Full width --- `full`
 
@@ -86,15 +79,20 @@ By default, as shown in this document, the page header contains the title, autho
 These can be turned off with `header: false` and `footer: false`.
 Custom header and footer contents can also be provided with `header-content` and `footer-content`.
 
+=== Draft
+
+Setting `draft: true` will introduce a soft watermark to make it clear the page is under ongoing revision.
+
 === Bibliography --- `bib`
 
 The `bib` option takes a `bibliography("file.bib")` function for citations and is simply for convenience.
 It creates a "Bibliography" section at the end of the document in full width.
 
 == Functions
+// TODO: No way of making citations/notes not collide with bottom page numbers/footers.
 
-This template provides three functions: `#note()`, `#sidecite()`, and `#wideblock()`, which are modifications of functions made by #link("https://noahgula.com/")[Noah Gula] for his `tufte-memo` template #sidecite(<tufte-memo2024>).
-These functions rely on the `drafting` package by Nathan Jessurun and #link("https://t1ng.dk/")[Jens Tinggaard] #sidecite(<drafting2025>).
+This template provides three functions: `#note()`, `#sidecite()`, and `#wideblock()`, which are modifications of functions made by #link("https://noahgula.com/")[Noah Gula] for his `tufte-memo` template #sidecite(<tufte-memo2024>, dy: -6em).
+These functions rely on the `drafting` package by Nathan Jessurun and #link("https://t1ng.dk/")[Jens Tinggaard] #sidecite(<drafting2025>, dy: -2em).
 
 === note --- `#note()` <sec:note>
 
@@ -122,7 +120,6 @@ For example, this note#note(dy: -2em)[This is an example note.] was placed as fo
 ```
 
 Different types of content can also be placed in with the `#note()` function, e.g., figures, tables, or code blocks.
-
 #note(dy: -10em, numbered: false)[
   Likewise, this note without numbering can be placed by:
 
@@ -131,7 +128,6 @@ Different types of content can also be placed in with the `#note()` function, e.
   ```
 ]
 
-#v(-1.5em)
 For example, this is a note figure:
 
 ```typst
@@ -152,7 +148,7 @@ For example, this is a note figure:
   )
 ]
 
-For figures in the main text, it is also possible to position their caption as a note with
+For figures in the main text, it is also possible to position their caption as a note with:
 
 ```typst
 #set figure.caption(position: top)
