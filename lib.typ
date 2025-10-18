@@ -29,7 +29,8 @@
 
 #let code-font = (
   "Luxi Mono",
-  "Lilex"
+  "Lilex",
+  "DejaVu Sans Mono"
 )
 
 /*
