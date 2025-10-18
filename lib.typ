@@ -303,7 +303,9 @@
     side: right,
   )
 
-  if toc and not full { note(dy: 1.5em, numbered: false)[#outline(depth: 2)] }
+  // TODO: Figure out how to align notes relative to another line on the left side
+  // For some reason if this were to match header 1.2em offset, would be too low....
+  if toc and not full { note(dy: 0.75em, numbered: false)[#outline(depth: 2)] }
 
   doc
 
