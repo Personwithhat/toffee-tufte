@@ -14,7 +14,7 @@
   bib: bibliography("main.bib"),
 )
 
-= Usage Guide <sec:usage-guide>
+= usage guide <sec:usage-guide>
 == Motivation
 
 Famous for his works on information design and data visualization, #link("https://en.wikipedia.org/wiki/Edward_Tufte")[Edward Tufte's] handout design is lauded for having well-set typography with a clean and elegant look.

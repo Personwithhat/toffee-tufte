@@ -122,6 +122,39 @@
   }
 }
 
+/// From https://typst.app/universe/package/accelerated-jacow
+/// Capitalize major words, e.g. "This is a Word-Caps Heading"
+/// Heuristic until we have https://github.com/typst/typst/issues/1707
+#let wordcaps(body) = {
+  if body.has("text") {
+    let txt = body.text //lower(body.text)
+    let words = txt.matches(regex("^()(\\w+)")) // first word
+    words += txt.matches(regex("([.:;?!]\s+)(\\w+)")) // words after punctuation
+    words += txt.matches(regex("()(\\w{4,})")) // words with 4+ letters
+    for m in words {
+      let (pre, word) = m.captures
+      word = upper(word.at(0)) + word.slice(1)
+      txt = txt.slice(0, m.start) + pre + word + txt.slice(m.end)
+    }
+    txt
+  } else if body.has("children") {
+    body.children.map(it => wordcaps(it)).join()
+  } else {
+    body
+  }
+}
+// To preserve numbering when applying wordcaps to headers
+#let wordcaps-header(header) = {
+  if header.numbering != none {
+    counter(heading).display(header.numbering)
+  }
+  h(0.3em)
+  wordcaps(header.body)
+}
+
+// **
+// ** Main Template
+// **
 #let template(
   title: none,
   authors: none,
@@ -174,7 +207,7 @@
   show ref: set text(blue)
   show link: set text(blue)
 
-  set par(justify: true, spacing: 1.5em)
+  set par(justify: true, spacing: 1.5em) // TODO: Double check spacing and leading
 
   set enum(indent: 1em)
   set list(indent: 1em)
@@ -186,25 +219,34 @@
   set heading(numbering: numbly(
   (..)=>h(-0.3em),  // use {level:format} to specify the format
   "{1}.{2}",        // if format is not specified, arabic numbers will be used
-  (..)=>h(-0.3em),    // here, we only want the 3rd level
   ))
+  show heading.where(level: 1): it => { 
+    set text(size: 15pt, weight: "bold", hyphenate: false)
+    block(above: 1.2em, below: 0.85em,
+      wordcaps-header(it)
+    )
+  }
+  show heading.where(level: 2): it => { 
+    set text(size: 14pt, weight: "regular", style: "italic", hyphenate: false)
+    block(above: 1.4em, below: 0.7em,
+      wordcaps-header(it)
+    )
+  }
+  show heading.where(level: 3): it => {
+      set text(size: 10pt, weight: "bold", style:"italic")
+      block(above: 1.9em, below: 0.8em, sticky: true,
+        underline(h(0.3em)+it.body, offset: 0.16em, extent: 0.3em)
+      )
+  }
 
-  show heading.where(level: 1): set text(size: 15pt, weight: "bold")
-  show heading.where(level: 2): set text(size: 14pt, weight: "regular",style: "italic")
-    show heading.where(level: 3): it => {
-        set text(size: 10pt, weight: "bold", style:"italic")
-        block(above: 1.9em, below: 0.8em)[
-          #underline(h(0.3em)+it.body, offset: 0.16em, extent: 0.3em)
-        ]
-    }
-
-  show heading.where(level: 1): set block(above: 1.2em, below: 0.85em)
-  show heading.where(level: 2): set block(above: 1.4em, below: 0.7em)
+  //show heading.where(level: 1): set block(above: 1.2em, below: 0.85em)
+  //show heading.where(level: 2): set block(above: 1.4em, below: 0.7em)
   //show heading.where(level: 3): set block(above: 1.8em, below: 0.7em)
 
 // **
 // ** Specialty
 // **
+  // TODO: Pass over all colors/theming/etc. (e.g. the lumen on page earlier and stuff)
   //let z-bg            = rgb("#dadadace")
   //let code-bg         = rgb("#f5f5f596")
   let z-bg            = rgb("#dadadace")
