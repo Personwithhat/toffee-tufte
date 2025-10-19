@@ -219,6 +219,7 @@
   set heading(numbering: numbly(
   (..)=>h(-0.3em),  // use {level:format} to specify the format
   "{1}.{2}",        // if format is not specified, arabic numbers will be used
+  (..)=>h(-0.3em)   // No numbering on level 3's
   ))
   show heading.where(level: 1): it => { 
     set text(size: 15pt, weight: "bold", hyphenate: false)
@@ -235,7 +236,7 @@
   show heading.where(level: 3): it => {
       set text(size: 10pt, weight: "bold", style:"italic")
       block(above: 1.9em, below: 0.8em, sticky: true,
-        underline(h(0.3em)+it.body, offset: 0.16em, extent: 0.3em)
+        underline(h(0.3em)+wordcaps-header(it), offset: 0.16em, extent: 0.3em)
       )
   }
 
