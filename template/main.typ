@@ -244,3 +244,19 @@ Test Code block
 ```
 
 #lorem(15) `Behold` or `this thing here` all right? `ok` #lorem(15)
+
+// To counteract above note settings....blergh.
+#show figure.where(kind: table): set figure.caption(position: bottom)
+#figure(
+  jacow-table("lccc", header: top+left, // top, left or none
+    [], [Gen A], [Gen B], [Gen C],
+    [Frequency], table.cell(qty(1234567.89, "Hz"), colspan: 3, align: center),
+    [Voltage], qty(1, "kV"), qty(3, "kV"), qty(3, "kV"),
+    [Cells], [3], [5], [9],
+    [Quality], [100], [500], num(1000),
+  ),
+  //placement: none, // `top`, `bottom` or `auto` for floating placement or `none` for inline placement
+  caption: [
+    Imaginary specifications of a device for the three generations A, B and C
+  ]
+) <table:specs>

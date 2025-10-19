@@ -5,6 +5,12 @@
 // Code block formatting
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.8": *
+// Selective page header generation
+#import "@preview/hydra:0.6.1": hydra, anchor
+
+// TODO: TBD how useful this is for now or if othe rpackage to be used.
+#import "@preview/unify:0.7.1": unit, num, qty, numrange, qtyrange
+
 
 #let sans-fonts = (
   "Gillius ADF",
@@ -122,9 +128,10 @@
   }
 }
 
-/// From https://typst.app/universe/package/accelerated-jacow
-/// Capitalize major words, e.g. "This is a Word-Caps Heading"
-/// Heuristic until we have https://github.com/typst/typst/issues/1707
+/*  From https://typst.app/universe/package/accelerated-jacow
+    Capitalize major words, e.g. "This is a Word-Caps Heading"
+    Heuristic until we have https://github.com/typst/typst/issues/1707
+*/
 #let wordcaps(body) = {
   if body.has("text") {
     let txt = body.text //lower(body.text)
@@ -145,11 +152,48 @@
 }
 // To preserve numbering when applying wordcaps to headers
 #let wordcaps-header(header) = {
-  if header.numbering != none {
-    counter(heading).display(header.numbering)
+  if header.has("numbering") and header.numbering != none {
+    //counter(heading).display(header.numbering)
+    numbering(header.numbering, ..counter(heading).at(header.location()))
+    h(0.3em)
   }
-  h(0.3em)
   wordcaps(header.body)
+}
+#let wordcaps-outline(entry) = {
+  if entry.has("numbering") and entry.numbering != none {
+    numbering(entry.numbering, ..counter(heading).at(entry.location()))
+    h(0.3em)
+  }
+  wordcaps(entry.inner())
+}
+
+/* Table in jacow style
+    - spec (str): Column alignment specification string such as "ccr"
+    - header (alignment, none): header location (top and/or bottom) or none
+    - contents: table contents
+*/
+#let jacow-table(spec, header: top, ..contents) = {
+  spec = spec.codepoints()
+  if header == none { header = alignment.center }
+  let args = (
+    columns: spec.len(),
+    align: spec.map(i => (a: auto, c: center, l: left, r: right).at(i)),
+    stroke: (x, y) => {
+      if y == 0 {(top: 0.08em, bottom: if header.y == top {0.05em})}
+      else if y > 1 {(top: 0em, bottom: 0.08em)}
+    },
+  )
+  for (key, value) in contents.named() {
+    args.insert(key, value)
+  }
+
+  show table.cell.where(y: 0): it => if header.y == top {strong(it)} else {it}
+  show table.cell.where(x: 0): it => if header.x == left {strong(it)} else {it}
+
+  table(
+    ..args,
+    ..contents.pos(),
+  )
 }
 
 // **
@@ -239,7 +283,20 @@
         underline(h(0.3em)+wordcaps-header(it), offset: 0.16em, extent: 0.3em)
       )
   }
+  
+  // TODO: Improve outline formatting. :)
+  show outline.entry.where(level: 1): set outline.entry(fill: none)
+  show outline.entry.where(level: 1): set text(weight: "bold")
 
+  // Make sure outline usees title case as well.
+  show outline.entry: it => {
+    show link: set text(fill:luma(30)) // TODO: Cleanup refs. 
+    link(
+      it.element.location(),
+      it.indented(it.prefix(), wordcaps-outline(it)),
+    )
+  }
+  
   //show heading.where(level: 1): set block(above: 1.2em, below: 0.85em)
   //show heading.where(level: 2): set block(above: 1.4em, below: 0.7em)
   //show heading.where(level: 3): set block(above: 1.8em, below: 0.7em)
@@ -323,6 +380,8 @@
 
   show figure.caption: set text(font: sans-fonts)
 
+  // Tables
+  show figure.where(kind: table): set figure.caption(position: top)
   
 // **
 // ** Page, header, footer
@@ -336,19 +395,36 @@
       bottom: 0.75in,
     ),
     header: context { 
-      if header and header-content != none {
+      if here().page() == 1 { // Skip Header on first page
+        none
+      } else if header and header-content != none {
         header-content
       } else if header {
         set text(size: 8pt)
-        wideblock({
-          if counter(page).get().first() > 1 [
-            #emph[#title]
-            #h(1fr)
-            #emph[#date]
-            \
-            #emph[#authors]
-          ]
-        })
+        wideblock(
+        hydra(
+          2,
+          // Filters out TOC's/outlines
+          prev-filter: (ctx, candidates) => candidates.primary.prev.outlined == true,
+          // Displays header
+          display: (ctx, candidate) => {
+            grid(
+              columns: (auto, 1fr),
+              column-gutter: 3em,
+              align: (left+top, right+top),
+              title,
+              {
+                set par(justify: false)
+                wordcaps-header(query(heading.where(level: 1).before(here())).last())
+                " / "
+                wordcaps-header(candidate)
+              }
+            )
+            line(length: 100%)
+          },
+        )
+        )
+        anchor()
       } else { none } 
     },
     footer: context { 
