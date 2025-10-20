@@ -11,6 +11,8 @@
 // TODO: TBD how useful this is for now or if othe rpackage to be used.
 #import "@preview/unify:0.7.1": unit, num, qty, numrange, qtyrange
 
+// Boxes!
+#import "boxes.typ": *
 
 #let sans-fonts = (
   "Gillius ADF",
@@ -304,12 +306,6 @@
 // **
 // ** Specialty
 // **
-  // TODO: Pass over all colors/theming/etc. (e.g. the lumen on page earlier and stuff)
-  //let z-bg            = rgb("#dadadace")
-  //let code-bg         = rgb("#f5f5f596")
-  let z-bg            = rgb("#dadadace")
-  let code-bg         = rgb("#f5f5f5").darken(1%)
-  let code-border     = rgb("#F5F5F5").darken(16%)
   show raw: set text(font: code-font)
   show raw: set block(above: 0.85em, below: 1.35em)
 
