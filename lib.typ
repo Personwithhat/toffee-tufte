@@ -167,7 +167,7 @@
   wordcaps(entry.inner())
 }
 
-/* Table in jacow style
+/* Table in jacow style from same template
     - spec (str): Column alignment specification string such as "ccr"
     - header (alignment, none): header location (top and/or bottom) or none
     - contents: table contents
@@ -348,7 +348,7 @@
     number-format: (number) => {
       text(luma(65%), size:7pt, [#h(0.7em)#number])
     },
-    inset: (left:0em, rest:0.32em),
+    inset: (left:0em, rest:0.29em),
     zebra-fill: z-bg,
     fill: code-bg,
     lang-format: none, // Don't need language atm.
@@ -412,14 +412,17 @@
               columns: (auto, 1fr),
               column-gutter: 3em,
               align: (left+top, right+top),
-              title,
               {
                 set par(justify: false)
-                wordcaps-header(query(heading.where(level: 1).before(here())).last())
-                " / "
+                set text(size: 12pt, style: "italic")
                 wordcaps-header(candidate)
+              },
+              {
+                set text(size: 12pt)
+                wordcaps-header(query(heading.where(level: 1).before(here())).last())
               }
             )
+            v(-0.25em)
             line(length: 100%)
           },
         )

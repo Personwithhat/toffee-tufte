@@ -78,7 +78,7 @@ TOC is disabled when `full` is used
 In addition to the default Tufte-style format as shown in this document, this template also provides the option to become a full width document by setting `full: true`.
 Doing so will turn all contents placed in the right margin to footnotes automatically.
 
-=== Headers and footers
+=== page Headers and footers
 
 By default, as shown in this document, the page header contains the title, author, and date, while the footer contains just the page number.
 These can be turned off with `header: false` and `footer: false`.
