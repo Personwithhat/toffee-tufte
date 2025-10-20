@@ -1,9 +1,15 @@
-// From: https://typst.app/universe/package/hei-synd-report
-//-------------------------------------
-// 
-  // TODO: Pass over all colors/theming/etc. (e.g. the lumen on page earlier and stuff)
-  //let z-bg            = rgb("#dadadace")
-  //let code-bg         = rgb("#f5f5f596")
+/*
+  Inspiration for box styling taken from: 
+    https://typst.app/universe/package/hei-synd-report
+*/
+#import "@preview/showybox:2.0.4": showybox
+
+// todo move  this out
+#let in-note = state("in-note", false)
+
+// TODO: Pass over all colors/theming/etc. (e.g. the lumen on page earlier and stuff)
+//let z-bg            = rgb("#dadadace")
+//let code-bg         = rgb("#f5f5f596")
 #let code-bg         = rgb("#f5f5f5").darken(1%)
 #let code-border     = rgb("#F5F5F5").darken(16%)
 #let z-bg            = rgb("#dadadace")
@@ -237,5 +243,45 @@
     )[
       #body
     ]
+  ]
+}
+
+
+
+//-------------------------------------
+// TEST/DEV
+//
+//
+
+// Wrapper to allow inset positioning of the box itself 
+// To account for thicker-borders extending the 'box' start position.
+#let showybox2(border: 0pt, above: 0.9em, below: 0.9em, ..args)= {
+  // For now just handle it like such, maybe improve later to grab border size.
+  // Need 0.3pt even when border=0, misaligned for some reason.
+  block(inset:(left:border/2+0.3pt), above:above, below:below,
+    showybox(..args)
+  )
+}
+#let showy(body, color: color-info, title: "") = {
+  let inset = 1.13em
+  let border = 8pt
+  showybox2(border:border,
+    frame: (
+      border-color: color,
+      body-color: code-bg,
+      thickness: (left: border),
+      radius: 1pt,
+      inset: (left: inset*1.5, top: inset, right: inset, bottom: inset),
+    ),
+    title-style: (
+      color: black,
+      weight: "regular",
+      align: center
+    )
+  )[
+    #context{
+      // set text(size: 30pt) if in-note.get() Override some styling if in-notes
+      body
+    }
   ]
 }

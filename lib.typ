@@ -52,6 +52,7 @@
 #let fullwidth = state("fullwidth", false)
 
 #let notecounter = counter("notecounter")
+
 /* 
   Sidenotes
 
@@ -62,6 +63,7 @@
     - `body: content` Required. The content of the sidenote.
 */
 #let note(dy: auto, numbered: true, body) = context {
+  in-note.update(true)
   if fullwidth.get() and not numbered {
     footnote(body, numbering: _ => [])
     counter(footnote).update(n => n - 1)
@@ -86,6 +88,7 @@
       dy: dy,
     ))
   }
+  in-note.update(false)
 }
 
 /* 
