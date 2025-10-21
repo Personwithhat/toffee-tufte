@@ -161,22 +161,33 @@
   )
 }
 #let showy(body, icon: none, color: color-info, title: "") = {
+  title = "" // TODO: For now no titles in these boxes.
+
+
   let border = if icon == none { 5pt } else { 5pt }
   let iconheight = 1.9em
   let inset = if icon == none { 1em } else { 1em*(1em/iconheight) }
   showybox2(border:border,
     frame: (
+      title-border: 10pt,
+      title-color: code-bg,
       border-color: color,
       body-color: code-bg,
       thickness: (left: border),
       radius: 1pt,
-      inset: (left: inset*1.3, top: inset, right: inset*1.3, bottom: inset),
+      body-inset: (left: inset*1.3, top: inset, right: inset*1.3, bottom: inset),
+      inset: (top: inset/3, bottom: inset/3)
     ),
     title-style: (
       color: black,
       weight: "regular",
-      align: center
-    )
+      align: left,
+      sep-thickness: 2pt
+    ),
+    title: if title != "" {
+        set text(size: 10pt)
+        h(0.8em)+title 
+      } else {""}
   )[
     #context{
       // set text(size: 30pt) if in-note.get() Override some styling if in-notes
