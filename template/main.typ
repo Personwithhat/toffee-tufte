@@ -16,9 +16,14 @@
 
 = usage guide <sec:usage-guide>
 == Motivation
-#firebox(lorem(6))
+#impbox(lorem(6))
+#todobox(lorem(6))
+#ideabox(lorem(6))
+#warnbox(lorem(6))
 #infobox(lorem(6))
+#infobox(lorem(20))
 #showy(lorem(6))
+#showy(lorem(20))
 #showy(lorem(6), title: "Title go brr")
 
 Famous for his works on information design and data visualization, #link("https://en.wikipedia.org/wiki/Edward_Tufte")[Edward Tufte's] handout design is lauded for having well-set typography with a clean and elegant look.
