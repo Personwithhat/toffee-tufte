@@ -49,7 +49,7 @@
 ]}
 
 //-------------------------------------
-// Todo Box
+// Todo Box  TODO - This is eyecatching but IDK if usable.
 //
 #let todo(body) = [
   #let rblock = block.with(stroke: red, radius: 0.5em, fill: red.lighten(80%))
