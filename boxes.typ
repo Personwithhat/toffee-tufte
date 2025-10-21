@@ -4,35 +4,7 @@
 */
 #import "@preview/showybox:2.0.4": showybox
 
-// todo move  this out
-#let in-note = state("in-note", false)
-
-// TODO: Pass over all colors/theming/etc. (e.g. the lumen on page earlier and stuff)
-//let z-bg            = rgb("#dadadace")
-//let code-bg         = rgb("#f5f5f596")
-#let code-bg         = rgb("#f5f5f5").darken(1%)
-#let code-border     = rgb("#F5F5F5").darken(16%)
-#let z-bg            = rgb("#dadadace")
-
-#let color-info      = rgb("#5b75a0ff")
-#let color-todo      = rgb("#F5F5F5").darken(10%)
-#let color-idea      = color-todo
-#let color-warning   = rgb("#ffce31ff")
-#let color-important = rgb("#f44336ff")
-//#let color-fire      = rgb("#fc9502ff")
-//#let color-rocket    = rgb("#bc5fd3ff")
-
-// Resources
-#let img-folder        = "img/"
-#let icon-folder       = "img/icons/"
-
-#let icon-idea         = icon-folder + "idea.svg"
-#let icon-important    = icon-folder + "important.svg"
-#let icon-info         = icon-folder + "info.svg"
-#let icon-todo         = icon-folder + "todo.svg"
-#let icon-warning      = icon-folder + "warning.svg"
-//#let icon-fire         = icon-folder + "fire.svg"
-//#let icon-rocket       = icon-folder + "rocket.svg"
+#import "constants.typ": *
 
 // Option Style
 #let option-style(
@@ -62,7 +34,7 @@
 ]
 
 //-------------------------------------
-// Informative boxes
+// Informative boxes TODO: Check these out as well.
 //
 // Creating nice looking information boxes with different headings
 #let colorbox(
@@ -144,11 +116,8 @@
   ]
 }
 
-
-
 //-------------------------------------
-// TEST/DEV
-//
+// Basic clue/note boxes
 //
 
 // Wrapper to allow inset positioning of the box itself 
