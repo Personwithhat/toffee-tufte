@@ -16,23 +16,11 @@
 
 = usage guide <sec:usage-guide>
 == Motivation
-#impbox(lorem(6))
-#todobox(lorem(6))
-#ideabox(lorem(6))
-#warnbox(lorem(6))
-#infobox(lorem(6))
-#infobox(lorem(20))
-#showy(lorem(6))
-#showy(lorem(20))
-#showy(lorem(6), title: "Title go brr")
-
 Famous for his works on information design and data visualization, #link("https://en.wikipedia.org/wiki/Edward_Tufte")[Edward Tufte's] handout design is lauded for having well-set typography with a clean and elegant look.
 Its design and style is a favorite of many, and has been replicated in various typesetting programs#note[See #link("https://www.overleaf.com/latex/templates/example-of-the-tufte-handout-style/ysjghcrgdrnz")[LaTeX], #link("https://bookdown.org/yihui/rmarkdown/tufte-handouts.html")[R Markdown], #link("https://github.com/fredguth/tufte-inspired")[Quarto], and Typst itself #link("https://typst.app/universe/package/tufte-memo")[one] - #link("https://typst.app/universe/package/toffee-tufte")[two]]
-#showy(lorem(6))
 
+This template aims to provide the practical advantages of the Tufte-inspired layout, while keeping the more familiar design language for scientific documents with a focus on information clarity and density.
 
-This template aims to provide the practical advantages of the Tufte-inspired layout, while keeping the more familiar design language for scientific documents with a focus on information clarity and density.#note(showy(lorem(6), title: "Title go brr"))
-#showy(lorem(6), title: "Title go brr")
 == Options
 
 To use this template, simply import it and set the options with a `show` rule:
@@ -112,7 +100,7 @@ These functions rely on the `drafting` package by Nathan Jessurun and #link("htt
 
 === note --- `#note()` <sec:note>
 
-#block(fill: luma(95%), radius: 4pt, inset: 5pt, [
+#showy([
   A note.
 
   Places a note at the right margin.
@@ -182,7 +170,7 @@ For example, this is a note figure:
 
 === note citation --- `#sidecite()`
 
-#block(fill: luma(95%), radius: 4pt, inset: 5pt, [
+#showy([
   A note citation.
 
   Places a note at the right margin.
@@ -211,7 +199,7 @@ The usual `form`, `style`, and `supplement` for citations can be fed to the func
 
 === Wideblock --- `#wideblock()` <sec:wideblock>
 
-#block(fill: luma(95%), radius: 4pt, inset: 5pt, [
+#showy([
   Wideblock
 
   Wrapped content will span the full width of the page.
@@ -243,18 +231,21 @@ The usual `form`, `style`, and `supplement` for citations can be fed to the func
   )
 ]
 
-= Code Tests
+#pagebreak()
 
-#lorem(40)
+= Boxes
+#impbox(lorem(6))
+#todobox(lorem(6))
+#ideabox(lorem(6))
+#warnbox(lorem(6))
+#infobox(lorem(6))
+#infobox(lorem(20))
+#showy(lorem(6))
+#showy(lorem(20))
+#showy(lorem(6), title: "Title go brr")
 
-#lorem(40)
-
-#lorem(15) Behold:
-```
-Test Code block
-```
-
-#lorem(15) `Behold` or `this thing here` all right? `ok` #lorem(15)
+This template aims to provide the practical advantages of the Tufte-inspired layout, while keeping the more familiar design language for scientific documents with a focus on information clarity and density.#note(showy(lorem(6), title: "Title go brr"))
+#showy(lorem(6), title: "Title go brr")
 
 // To counteract above note settings....blergh.
 #show figure.where(kind: table): set figure.caption(position: bottom)
