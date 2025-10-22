@@ -4,14 +4,12 @@
   title: [TITLE TBD - something somethng wiki],
   authors: "Nowhere Maam",
   // date: none,
-  // full: true,
   // draft: true,
   abstract: [
     This template was inspired by the style of Edward Tufte's handouts and books.
     By keeping the large right margin for notes, but changing the design language, this template aims to maintain the practicality of a note-centric document, while having a more familiar look for scientific and engineering fields.
     This document covers the usage guide of this template.
-  ],
-  bib: bibliography("main.bib"),
+  ]
 )
 
 = usage guide <sec:usage-guide>

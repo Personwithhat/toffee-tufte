@@ -21,13 +21,10 @@
   date: datetime.today().display("[day] [month repr:long] [year]"),
   abstract: none,
   toc: true,
-  full: false,
+  //full: true,
   header: true,
   footer: true,
-  header-content: none,
-  footer-content: none,
   draft: false,
-  bib: none,
   doc,
 ) = {
 
@@ -38,16 +35,12 @@
     set document(title: title)
   }
 
+  // TODO: No simple/easy way of conditional updates of right-margin
+  // Depending on 'full'....for now just not have it.
+  let full = false
+  
   // Update full width state used by note and notecite functions
   fullwidth.update(full)
-
-  // Full width or with right margin
-  let right-margin = {
-    if full { 0.7in } else { 3in }
-  }
-  let left-margin = 0.7in
-  let margin-diff = right-margin - left-margin
-  let wideblock(content) = block(width: 100% + margin-diff, content)
 
 // **
 // ** Main Formatting
@@ -207,11 +200,7 @@
       bottom: 0.75in,
     ),
     header: context { 
-      if here().page() == 1 { // Skip Header on first page
-        none
-      } else if header and header-content != none {
-        header-content
-      } else if header {
+      if header {
         set text(size: 8pt)
         wideblock(
         hydra(
@@ -243,9 +232,7 @@
       } else { none } 
     },
     footer: context { 
-      if footer and footer-content != none {
-        footer-content
-      } else if footer {
+      if footer {
         set text(size: 8pt)
         wideblock({
           set align(right)
@@ -282,6 +269,13 @@
 // **
 // ** Layout
 // **
+  context {
+      if here().page() == 3 { // Skip Header on first page
+        none
+        "tsdffsdfdfext"
+      }
+  }
+
   // Title block
   titleblock(title, authors, date, abstract)
   v(1.5em)
@@ -304,8 +298,18 @@
 
   doc
 
-  // TODO: Improve bibliography layout and font choice for it.
-  set cite(style: "american-physics-society")
-  show bibliography: set par(spacing: 1em)
-  if bib != none { pagebreak(); wideblock(bib) }
+  pagebreak()
+  show bibliography: it =>{
+    show heading: set align(center) 
+    set par(spacing: 1.2em)// hanging-indent: 2.5in - TODO: Hanging-indent doesnt work.
+    it
+  }
+  wideblock(
+  bibliography(
+    title: "References"+v(0.2em), 
+    "template/main.bib", 
+    style: "ieee" //"apa", "chicago-author-date", "chicago-notes", "mla"
+  )
+  )
+  
 }

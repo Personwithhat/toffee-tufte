@@ -10,6 +10,9 @@
 #let fullwidth = state("fullwidth", false)
 #let notecounter = counter("notecounter")
 
+#let left-margin = 0.7in
+#let right-margin = 3in // 0.7in if full.
+
 // -----------------------------
 // Functions
 // 
@@ -86,11 +89,11 @@
   Wrapped content will span the full width of the page.
     - `content: content | none` Required. The content to span the full width.
 */
-#let wideblock(content) = context {
+#let wideblock(content, border: 0pt) = context {
   if fullwidth.get() {
-    block(width: 100%, content)
+    block(width: 100%, content, stroke: border + red)
   } else {
-    block(width: 100% + 2in, content)
+    block(width: 100% + (right-margin - left-margin), content, stroke: border + red)
   }
 }
 
