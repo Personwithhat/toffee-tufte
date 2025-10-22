@@ -202,8 +202,8 @@
     header: context { 
       if header {
         set text(size: 8pt)
-        wideblock(
-        hydra(
+        wideblock( //border: 1pt,
+        hydra( // Bottom is ~0.25in from main text
           2,
           // Filters out TOC's/outlines
           prev-filter: (ctx, candidates) => candidates.primary.prev.outlined == true,
@@ -223,8 +223,7 @@
                 wordcaps-header(query(heading.where(level: 1).before(here())).last())
               }
             )
-            v(-0.25em)
-            line(length: 100%)
+            move(dy: -0.25em, line(length: 100%))
           },
         )
         )
